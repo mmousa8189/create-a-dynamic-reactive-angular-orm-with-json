@@ -342,7 +342,7 @@ button:focus:not(:focus-visible) {
   outline: 0;
 }
 
-input,
+/* input,
 button,
 select,
 optgroup,
@@ -356,18 +356,18 @@ textarea {
 button,
 select {
   text-transform: none;
-}
+} */
 
 [role=button] {
   cursor: pointer;
 }
 
-select {
+/* select {
   word-wrap: normal;
 }
 select:disabled {
   opacity: 1;
-}
+} */
 
 [list]::-webkit-calendar-picker-indicator {
   display: none;
@@ -11389,7 +11389,7 @@ html {
     transition: padding-top 0.3s, padding-bottom 0.3s;
   }
   #mainNav .navbar-brand {
-    font-size: 1.75em;
+
     transition: font-size 0.3s;
   }
   #mainNav .navbar-nav {

@@ -26,6 +26,10 @@ interface JsonFormControlOptions {
   step?: string;
   icon?: string;
 }
+interface JsonFormControlSelectOptions{
+  key?:string;
+  value?:string;
+}
 interface JsonFormControls {
   id: string;
   name: string;
@@ -35,6 +39,8 @@ interface JsonFormControls {
   type: string;
   options?: JsonFormControlOptions;
   required: boolean;
+  rows:string;
+  selectoptions?:JsonFormControlSelectOptions[];
   validators: JsonFormValidators;
 }
 export interface JsonFormData {
@@ -49,7 +55,8 @@ export interface JsonFormData {
 })
 export class JsonFormComponent implements OnInit,OnChanges  {
   @Input() jsonFormData : JsonFormData | undefined;
-  public dynmicForm: FormGroup = this.fb.group({});
+  public dynamicForm: FormGroup = this.fb.group({});
+  public payLoad:string|undefined;
   constructor(private fb: FormBuilder,private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -110,7 +117,7 @@ export class JsonFormComponent implements OnInit,OnChanges  {
         }
       }
 
-      this.dynmicForm.addControl(
+      this.dynamicForm.addControl(
         control.name,
         this.fb.control(control.value, validatorsToAdd)
       );
@@ -118,8 +125,10 @@ export class JsonFormComponent implements OnInit,OnChanges  {
   }
 
   onSubmit() {
-    alert('Form valid: '+ this.dynmicForm.valid)
-    console.log('Form valid: ', this.dynmicForm.valid);
-    console.log('Form values: ', this.dynmicForm.value);
+    alert('Form valid: '+ this.dynamicForm.valid)
+    this.payLoad = JSON.stringify(this.dynamicForm.getRawValue());
+    console.log('Form valid: ', this.dynamicForm.valid);
+    console.log('Form values: ', this.dynamicForm.value);
+    console.log('Form Raw value: ', this.payLoad);
   }
 }

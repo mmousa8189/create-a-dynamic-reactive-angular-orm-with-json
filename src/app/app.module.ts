@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JsonFormComponent } from './components/json-form/json-form.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { DynamicFormBuilderComponent } from './components/dynamic-form-builder/dynamic-form-builder.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     JsonFormComponent,
-    DynamicFormComponent
+    DynamicFormComponent,
+    DynamicFormBuilderComponent
   ],
   imports: [
     BrowserModule,
