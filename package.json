@@ -9,7 +9,21 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "keywords": [
+    "typescript",
+    "playground",
+    "create",
+    "simple",
+    "project",
+    "seed"
+  ],
+  "author": {
+    "name": "Mohame Mousa",
+    "email": "mohamedamousa00@gmail.com",
+    "url": "http://mohamedmousa.com/"
+  },
+  "license": "MIT",
+  "private": false,
   "dependencies": {
     "@angular/animations": "~11.1.0",
     "@angular/common": "~11.1.0",
@@ -19,6 +33,8 @@
     "@angular/platform-browser": "~11.1.0",
     "@angular/platform-browser-dynamic": "~11.1.0",
     "@angular/router": "~11.1.0",
+    "bootstrap": "^5.1.3",
+    "jquery": "^3.6.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
