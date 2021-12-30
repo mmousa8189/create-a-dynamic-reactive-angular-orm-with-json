@@ -27,8 +27,10 @@ interface JsonFormControlOptions {
   icon?: string;
 }
 interface JsonFormControls {
+  id: string;
   name: string;
   label: string;
+  placeholder: string;
   value: string;
   type: string;
   options?: JsonFormControlOptions;
@@ -47,7 +49,7 @@ export interface JsonFormData {
 })
 export class JsonFormComponent implements OnInit,OnChanges  {
   @Input() jsonFormData : JsonFormData | undefined;
-  public myForm: FormGroup = this.fb.group({});
+  public dynmicForm: FormGroup = this.fb.group({});
   constructor(private fb: FormBuilder,private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -108,7 +110,7 @@ export class JsonFormComponent implements OnInit,OnChanges  {
         }
       }
 
-      this.myForm.addControl(
+      this.dynmicForm.addControl(
         control.name,
         this.fb.control(control.value, validatorsToAdd)
       );
@@ -116,7 +118,8 @@ export class JsonFormComponent implements OnInit,OnChanges  {
   }
 
   onSubmit() {
-    console.log('Form valid: ', this.myForm.valid);
-    console.log('Form values: ', this.myForm.value);
+    alert('Form valid: '+ this.dynmicForm.valid)
+    console.log('Form valid: ', this.dynmicForm.valid);
+    console.log('Form values: ', this.dynmicForm.value);
   }
 }

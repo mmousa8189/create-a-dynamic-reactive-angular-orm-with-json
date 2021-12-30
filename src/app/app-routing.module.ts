@@ -4,8 +4,9 @@ import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.com
 
 
 const routes: Routes = [
+  { path: 'showdynamicform', component: DynamicFormComponent },
   //{ path: 'buildform', component: HeroesComponent },
-  { path: 'showform', component: DynamicFormComponent }
+  {path: '**', redirectTo: '/' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

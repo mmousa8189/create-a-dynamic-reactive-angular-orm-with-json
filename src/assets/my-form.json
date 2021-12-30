@@ -1,8 +1,10 @@
 {
   "controls": [
     {
+      "id": "firstName",
       "name": "firstName",
       "label": "First name:",
+      "placeholder": "First name",
       "value": "",
       "type": "text",
       "validators": {
@@ -11,45 +13,45 @@
       }
     },
     {
+      "id": "lastName",
       "name": "lastName",
       "label": "Last name:",
+      "placeholder": "Last name",
       "value": "",
       "type": "text",
       "validators": {}
     },
     {
+      "id": "email",
+      "name": "email",
+      "label": "Email:",
+      "placeholder": "Valid Email",
+      "value": "",
+      "type": "email",
+      "validators": {
+        "required": true,
+        "email": true
+      }
+    },
+    {
+      "id": "comments",
       "name": "comments",
       "label": "Comments",
+      "placeholder": "Comments",
       "value": "",
       "type": "textarea",
       "validators": {}
     },
     {
+      "id": "agreeTerms",
       "name": "agreeTerms",
       "label": "This is a checkbox?",
-      "value": "false",
+      "placeholder": "This is a checkbox?",
+      "value": "true",
       "type": "checkbox",
-      "validators": {}
-    },
-    {
-      "name": "size",
-      "label": "",
-      "value": "",
-      "type": "range",
-      "options": {
-        "min": "0",
-        "max": "100",
-        "step": "1",
-        "icon": "sunny"
-      },
-      "validators": {}
-    },
-    {
-      "name": "lightDark",
-      "label": "Do you like toggles?",
-      "value": "false",
-      "type": "toggle",
-      "validators": {}
+      "validators": {
+        "required": true
+      }
     }
   ]
 }

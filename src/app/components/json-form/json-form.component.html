@@ -1,7 +1,13 @@
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <div *ngFor="let control of jsonFormData?.controls">
-    <label>{{ control.label }}</label>
+
+<form [formGroup]="dynmicForm" (ngSubmit)="onSubmit()">
+  <div
+    class="form-group col-md-4"
+    *ngFor="let control of jsonFormData?.controls"
+  >
+    <label attr.for="{{ control.id }}">{{ control.label }}</label>
     <input
+      class="form-control"
+      attr.id="{{ control.id }}"
       *ngIf="
         [
           'text',
@@ -16,27 +22,30 @@
       [type]="control.type"
       [formControlName]="control.name"
       [value]="control.value"
+      attr.placeholder="{{ control.placeholder }}"
     />
     <textarea
+      class="form-control"
+      attr.id="{{ control.id }}"
       *ngIf="control.type === 'textarea'"
       [formControlName]="control.name"
       [value]="control.value"
+      attr.placeholder="{{ control.placeholder }}"
     ></textarea>
-    <checkbox
-      *ngIf="control.type === 'checkbox'"
-      [formControlName]="control.name"
+    <div class="col-sm-5" *ngIf="['checkbox'].includes(control.type)">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          attr.id="{{ control.id }}"
 
-    ></checkbox>
-    <toggle
-      *ngIf="control.type === 'toggle'"
-      [formControlName]="control.name"
-
-    ></toggle>
-    <input type="range" *ngIf="control.type === 'range'"
-    [min]="control.options?.min"
-    [max]="control.options?.max"
-    [formControlName]="control.name">
-
+          [type]="control.type"
+          [formControlName]="control.name"
+          [value]="control.value"
+        />
+        <label class="form-check-label" attr.for="{{ control.id }}"></label>
+      </div>
+    </div>
   </div>
-  <button type="submit">Submit</button>
+
+  <button type="submit" class="btn btn-primary">submit</button>
 </form>
