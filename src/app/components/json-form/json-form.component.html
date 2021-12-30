@@ -1,0 +1,42 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div *ngFor="let control of jsonFormData?.controls">
+    <label>{{ control.label }}</label>
+    <input
+      *ngIf="
+        [
+          'text',
+          'password',
+          'email',
+          'number',
+          'search',
+          'tel',
+          'url'
+        ].includes(control.type)
+      "
+      [type]="control.type"
+      [formControlName]="control.name"
+      [value]="control.value"
+    />
+    <textarea
+      *ngIf="control.type === 'textarea'"
+      [formControlName]="control.name"
+      [value]="control.value"
+    ></textarea>
+    <checkbox
+      *ngIf="control.type === 'checkbox'"
+      [formControlName]="control.name"
+
+    ></checkbox>
+    <toggle
+      *ngIf="control.type === 'toggle'"
+      [formControlName]="control.name"
+
+    ></toggle>
+    <input type="range" *ngIf="control.type === 'range'"
+    [min]="control.options?.min"
+    [max]="control.options?.max"
+    [formControlName]="control.name">
+
+  </div>
+  <button type="submit">Submit</button>
+</form>
