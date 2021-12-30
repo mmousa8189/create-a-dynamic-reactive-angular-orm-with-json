@@ -8,44 +8,14 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { JsonFormControls } from 'src/app/models/json-form-controls';
+import { JsonFormData } from 'src/app/models/json-form-data';
 
-interface JsonFormValidators {
-  min?: number;
-  max?: number;
-  required?: boolean;
-  requiredTrue?: boolean;
-  email?: boolean;
-  minLength?: boolean;
-  maxLength?: boolean;
-  pattern?: string;
-  nullValidator?: boolean;
-}
-interface JsonFormControlOptions {
-  min?: string;
-  max?: string;
-  step?: string;
-  icon?: string;
-}
-interface JsonFormControlSelectOptions{
-  key?:string;
-  value?:string;
-}
-interface JsonFormControls {
-  id: string;
-  name: string;
-  label: string;
-  placeholder: string;
-  value: string;
-  type: string;
-  options?: JsonFormControlOptions;
-  required: boolean;
-  rows:string;
-  selectoptions?:JsonFormControlSelectOptions[];
-  validators: JsonFormValidators;
-}
-export interface JsonFormData {
-  controls: JsonFormControls[];
-}
+
+
+
+
+
 
 @Component({
   selector: 'app-json-form',

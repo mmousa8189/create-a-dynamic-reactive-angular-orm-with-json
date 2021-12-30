@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { JsonFormData } from '../json-form/json-form.component';
+import { JsonFormData } from 'src/app/models/json-form-data';
 
 @Component({
   selector: 'app-dynamic-form',
