@@ -26,7 +26,7 @@ import { JsonFormData } from 'src/app/models/json-form-data';
 export class JsonFormComponent implements OnInit,OnChanges  {
   @Input() jsonFormData : JsonFormData | undefined;
   public dynamicForm: FormGroup = this.fb.group({});
-  public payLoad:string|undefined;
+  public formRowValue:string|undefined;
   constructor(private fb: FormBuilder,private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -96,9 +96,9 @@ export class JsonFormComponent implements OnInit,OnChanges  {
 
   onSubmit() {
     alert('Form valid: '+ this.dynamicForm.valid)
-    this.payLoad = JSON.stringify(this.dynamicForm.getRawValue());
+    this.formRowValue = JSON.stringify(this.dynamicForm.getRawValue());
     console.log('Form valid: ', this.dynamicForm.valid);
     console.log('Form values: ', this.dynamicForm.value);
-    console.log('Form Raw value: ', this.payLoad);
+    console.log('Form Raw value: ', this.formRowValue);
   }
 }
