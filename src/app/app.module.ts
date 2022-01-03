@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { JsonFormComponent } from './components/json-form/json-form.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { DynamicFormBuilderComponent } from './components/dynamic-form-builder/dynamic-form-builder.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DynamicFormBuilderComponent } from './components/dynamic-form-builder/d
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

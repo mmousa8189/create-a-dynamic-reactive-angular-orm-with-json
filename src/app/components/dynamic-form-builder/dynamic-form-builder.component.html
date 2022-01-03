@@ -1,16 +1,156 @@
-
 <section class="page-section portfolio" id="portfolio">
   <div class="container">
-     <!-- Portfolio Section Heading-->
-     <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Dynamic form builder</h2>
-     <!-- Icon Divider-->
-     <div class="divider-custom">
-         <div class="divider-custom-line"></div>
-         <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-         <div class="divider-custom-line"></div>
-     </div>
-     <div class="row justify-content-center">
+    <!-- Portfolio Section Heading-->
+    <h2
+      class="
+        page-section-heading
+        text-center text-uppercase text-secondary
+        mb-0
+      "
+    >
+      Dynamic form builder
+    </h2>
+    <!-- Icon Divider-->
+    <div class="divider-custom">
+      <div class="divider-custom-line"></div>
+      <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+      <div class="divider-custom-line"></div>
+    </div>
+    <!-- form builder-->
+    <div class="row justify-content-center">
 
-     </div>
+       <div class="row">
+        <div class="col-sm-8">
+          <form>
+            <div class="row">
+              <div class="col-sm-4">
+                <label for="controleIdName">Input Id & Name</label>
+                <input type="text" class="form-control form-control-sm" id="controleIdName"  placeholder="Enter Input Id">
+              </div>
+              <div class="col-sm-4">
+                <label for="controlelabel">Input label</label>
+                <input type="text" class="form-control form-control-sm" id="controlelabel"  placeholder="Enter Input label">
+              </div>
+              <div class="col-sm-4">
+                <label for="controleplaceholder">Input placeholder</label>
+                <input type="text" class="form-control form-control-sm" id="controleplaceholder"  placeholder="Enter Input placeholder">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <label for="controletype">Input type</label>
+                <select class="form-control">
+                  <option value='' disabled selected>Input Type</option>
+                  <option *ngFor="let type of controleTypes" [value]="type"> {{jsonFormControlTypesMapping[type]}} </option>
+                  </select>
+              </div>
+              <div class="col-sm-4">
+
+              </div>
+              <div class="col-sm-4">
+
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary">Add Controle</button>
+          </form>
+        </div>
+        <div></div>
+       </div>
+
+
+        <!-- <div class="row">
+          <div class="col-sm-6">
+            <div class="card" >
+              <div class="card-body">
+                <h5 class="card-title">First Name Input</h5>
+                <p class="card-text">
+                  add first name input to register form
+                </p>
+                <a (click)="addControle($event)" class="btn btn-primary" style="margin-right: 7px;">Add Controle</a>
+                <a (click)="removeControle($event)" class="btn btn-danger">Remove Controle</a>
+              </div>
+            </div>
+            <div class="card" >
+              <div class="card-body">
+                <h5 class="card-title">Last Name Input</h5>
+                <p class="card-text">
+                  add last name input to register form
+                </p>
+                <a (click)="addControle($event)" class="btn btn-primary" style="margin-right: 7px;">Add Controle</a>
+                <a (click)="removeControle($event)" class="btn btn-danger">Remove Controle</a>
+              </div>
+            </div>
+            <div class="card" >
+              <div class="card-body">
+                <h5 class="card-title">Salutation Input</h5>
+                <p class="card-text">
+                  add salutation input to register form
+                </p>
+                <a (click)="addControle($event)" class="btn btn-primary" style="margin-right: 7px;">Add Controle</a>
+                <a (click)="removeControle($event)" class="btn btn-danger">Remove Controle</a>
+              </div>
+            </div>
+            <div class="card" >
+              <div class="card-body">
+                <h5 class="card-title">JobTitle Input</h5>
+                <p class="card-text">
+                  add jobTitle input to register form
+                </p>
+                <a (click)="addControle($event)" class="btn btn-primary" style="margin-right: 7px;">Add Controle</a>
+                <a (click)="removeControle($event)" class="btn btn-danger">Remove Controle</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card" >
+              <div class="card-body">
+                <h5 class="card-title">Company Input</h5>
+                <p class="card-text">
+                  add company input to register form
+                </p>
+                <a (click)="addControle($event)" class="btn btn-primary" style="margin-right: 7px;">Add Controle</a>
+                <a (click)="removeControle($event)" class="btn btn-danger">Remove Controle</a>
+              </div>
+            </div>
+            <div class="card" >
+              <div class="card-body">
+                <h5 class="card-title">Country Input</h5>
+                <p class="card-text">
+                  add country input to register form
+                </p>
+                <a (click)="addControle($event)" class="btn btn-primary" style="margin-right: 7px;">Add Controle</a>
+                <a (click)="removeControle($event)" class="btn btn-danger">Remove Controle</a>
+              </div>
+            </div>
+            <div class="card" >
+              <div class="card-body">
+                <h5 class="card-title">Phone Input</h5>
+                <p class="card-text">
+                  add phone input to register form
+                </p>
+                <a (click)="addControle($event)" class="btn btn-primary" style="margin-right: 7px;">Add Controle</a>
+                <a (click)="removeControle($event)" class="btn btn-danger">Remove Controle</a>
+              </div>
+            </div>
+            <div class="card" >
+              <div class="card-body">
+                <h5 class="card-title">Email Input</h5>
+                <p class="card-text">
+                  add email input to register form
+                </p>
+                <a (click)="addControle($event)" class="btn btn-primary" style="margin-right: 7px;">Add Controle</a>
+                <a (click)="removeControle($event)" class="btn btn-danger">Remove Controle</a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+    </div>
+    <!-- end form builder-->
+    <!-- form builder result-->
+    <div class="row justify-content-center"></div>
+    <!-- end form builder result-->
   </div>
 </section>

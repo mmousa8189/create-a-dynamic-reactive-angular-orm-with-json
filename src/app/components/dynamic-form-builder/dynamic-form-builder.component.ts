@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Location,ViewportScroller } from '@angular/common';
+import { Router } from "@angular/router";
+import { JsonFormControlTypes, JsonFormControlTypesMapping } from 'src/app/models/json-form-control-types.enum';
 
 @Component({
   selector: 'app-dynamic-form-builder',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DynamicFormBuilderComponent implements OnInit {
 
-  constructor() { }
+  formControlTypes = JsonFormControlTypes;
+  jsonFormControlTypesMapping =JsonFormControlTypesMapping;
+  public controleTypes=Object.values(JsonFormControlTypes);;
+  constructor() {
+   }
 
   ngOnInit(): void {
   }
+
 
 }
