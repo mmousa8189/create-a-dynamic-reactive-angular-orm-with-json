@@ -2,11 +2,7 @@
   <div class="container">
     <!-- Portfolio Section Heading-->
     <h2
-      class="
-        page-section-heading
-        text-center text-uppercase text-secondary
-        mb-0
-      "
+      class="page-section-heading text-center text-uppercase text-secondary mb-0"
     >
       Dynamic form builder
     </h2>
@@ -18,48 +14,207 @@
     </div>
     <!-- form builder-->
     <div class="row justify-content-center">
-
-       <div class="row">
+      <div class="row">
         <div class="col-sm-8">
-          <form>
+          <form #dynamicForm="ngForm">
             <div class="row">
               <div class="col-sm-4">
                 <label for="controleIdName">Input Id & Name</label>
-                <input type="text" class="form-control form-control-sm" id="controleIdName"  placeholder="Enter Input Id">
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="controleIdName"
+                  name="controleIdName"
+                  placeholder="Enter Input Id"
+                  [(ngModel)]="controlModel.id && controlModel.name"
+                />
               </div>
               <div class="col-sm-4">
                 <label for="controlelabel">Input label</label>
-                <input type="text" class="form-control form-control-sm" id="controlelabel"  placeholder="Enter Input label">
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="controlelabel"
+                  name="controlelabel"
+                  [(ngModel)]="controlModel.label"
+                  placeholder="Enter Input label"
+                />
               </div>
               <div class="col-sm-4">
                 <label for="controleplaceholder">Input placeholder</label>
-                <input type="text" class="form-control form-control-sm" id="controleplaceholder"  placeholder="Enter Input placeholder">
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="controleplaceholder"
+                  name="controleplaceholder"
+                  [(ngModel)]="controlModel.placeholder"
+                  placeholder="Enter Input placeholder"
+                />
               </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
                 <label for="controletype">Input type</label>
-                <select class="form-control">
-                  <option value='' disabled selected>Input Type</option>
-                  <option *ngFor="let type of controleTypes" [value]="type"> {{jsonFormControlTypesMapping[type]}} </option>
-                  </select>
+                <select class="form-control" (change)="onSelectType($event)">
+                  <option value="" disabled selected>Input Type</option>
+                  <option
+                    *ngFor="let type of controleTypes"
+                    [value]="type"
+                    id="controleType"
+                    name="controleType" >
+                    {{ jsonFormControlTypesMapping[type] }}
+                  </option>
+                </select>
               </div>
               <div class="col-sm-4">
+                <!--validators-->
+                <div class="card">
+                  <div class="card-header">Validators</div>
+                  <div class="card-body">
+                    <!--required-->
+                    <div class="form-check form-check-inline" >
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="required"
+                      [value]="isHaveRequired"
+                      (change)="onCheckboxChange($event)" />
+                    <label class="form-check-label" for="required">Required</label>
+                  </div>
+                    <!--required-->
+                    <!--min-->
+                    <div *ngIf="controlModel.type == 'number'"
+                      class="form-check form-check-inline" >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="min"
+                        [value]="isHaveMin"
+                        (change)="onCheckboxChange($event)" />
+                      <label class="form-check-label" for="min">Min</label>
+                    </div>
+                    <!--min-->
+                    <!--max-->
+                    <div *ngIf="controlModel.type == 'number'"
+                      class="form-check form-check-inline"
+                    >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="max"
+                        [value]="isHaveMax"
+                        (change)="onCheckboxChange($event)"
+                      />
+                      <label class="form-check-label" for="max">Max</label>
+                    </div>
+                    <!--max-->
+                    <!--email-->
+                    <div *ngIf="controlModel.type == 'email'"
+                    class="form-check form-check-inline" >
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="email"
+                      [value]="isHaveEmail"
+                      (change)="onCheckboxChange($event)" />
+                    <label class="form-check-label" for="email">Email</label>
+                    </div>
+                    <!--email-->
+                    <!--minLength-->
+                     <div *ngIf="controlModel.type == 'text' || controlModel.type == 'textarea'"
+                      class="form-check form-check-inline" >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="minLength"
+                        [value]="isHaveMinLength"
+                        (change)="onCheckboxChange($event)" />
+                      <label class="form-check-label" for="minLength">Min Length</label>
+                      </div>
+                    <!--minLength-->
+                    <!--maxLength-->
+                     <div *ngIf="controlModel.type == 'text' || controlModel.type == 'textarea'"
+                      class="form-check form-check-inline" >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="maxLength"
+                        [value]="isHaveMaxLength"
+                        (change)="onCheckboxChange($event)" />
+                      <label class="form-check-label" for="maxLength">Max Length</label>
+                      </div>
+                    <!--maxLength-->
+                  </div>
+                </div>
 
+                <!--validators-->
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-8">
+                <!--validators-->
+                <div class="card">
+                  <div class="card-header">Validators Inputs</div>
+                  <div class="card-body">
 
+                    <div *ngIf="isHaveMin" class="col-sm-4">
+                      <label for="minvalidationvalue">Min Validation Value</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        id="minvalidationvalue"
+                        name="minvalidationvalue"
+                        [(ngModel)]="validators.min"
+                        placeholder="Min Validation Value"
+                      />
+                    </div>
+                    <div *ngIf="isHaveMax" class="col-sm-4">
+                      <label for="maxvalidationvalue">Max Validation Value</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        id="maxvalidationvalue"
+                        name="maxvalidationvalue"
+                        [(ngModel)]="validators.max"
+                        placeholder="Max Validation Value"
+                      />
+                    </div>
+
+                    <div *ngIf="isHaveMinLength" class="col-sm-4">
+                      <label for="minLengthvalidationvalue">Min Length Validation Value</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        id="minLengthvalidationvalue"
+                        name="minLengthvalidationvalue"
+                        [(ngModel)]="validators.minLength"
+                        placeholder="Min Length Validation Value"
+                      />
+                    </div>
+                    <div *ngIf="isHaveMaxLength" class="col-sm-4">
+                      <label for="maxLengthvalidationvalue">Max Length Validation Value</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        id="maxLengthvalidationvalue"
+                        name="maxLengthvalidationvalue"
+                        [(ngModel)]="validators.maxLength"
+                        placeholder="Max Length Validation Value"
+                      />
+                    </div>
+
+                  </div>
+                </div>
+
+                <!--validators-->
               </div>
             </div>
 
-            <button type="button" class="btn btn-primary">Add Controle</button>
+            <button type="button" class="btn btn-primary" (click)="addControle()">Add Controle</button>
           </form>
         </div>
         <div></div>
-       </div>
+      </div>
 
-
-        <!-- <div class="row">
+      <!-- <div class="row">
           <div class="col-sm-6">
             <div class="card" >
               <div class="card-body">
@@ -145,8 +300,6 @@
             </div>
           </div>
         </div> -->
-
-
     </div>
     <!-- end form builder-->
     <!-- form builder result-->

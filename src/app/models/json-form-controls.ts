@@ -10,7 +10,6 @@ export interface JsonFormControls {
   value: string;
   type: string;
   options?: JsonFormControlOptions;
-  required: boolean;
   rows:string;
   selectoptions?:JsonFormControlSelectOptions[];
   validators: JsonFormValidators;
