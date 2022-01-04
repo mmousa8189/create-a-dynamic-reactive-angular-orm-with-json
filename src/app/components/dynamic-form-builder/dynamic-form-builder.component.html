@@ -59,7 +59,7 @@
                 <label for="controletype">Input type</label>
                 <select class="form-control" id="controletype"
                 name="controletype" (change)="onSelectType($event)">
-                  <option value="0" disabled selected>Input Type</option>
+                  <option value="" disabled selected>Input Type</option>
                   <option
                     *ngFor="let type of controleTypes"
                     [value]="type"

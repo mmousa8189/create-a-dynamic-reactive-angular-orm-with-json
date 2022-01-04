@@ -45,7 +45,9 @@ export class DynamicFormBuilderComponent implements OnInit {
     this.validators = {} as JsonFormValidators;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.addInitInputsToForm();
+  }
 
   onCheckboxChange(event: Event) {
     if((event.target as HTMLInputElement).id == 'required'){
@@ -129,6 +131,7 @@ export class DynamicFormBuilderComponent implements OnInit {
     if(this.controlModel.type == this.formControlTypes.Select){
       this.controlModel.selectoptions = this.selectOptionsTemp;
     }
+    this.controlModel.label = this.controlModel.label+':';
     this.setValidators();
   }
   private setValidators():void{
@@ -157,5 +160,95 @@ export class DynamicFormBuilderComponent implements OnInit {
 
   }
 
+  private addInitInputsToForm():void{
+    this.controls.push(this.addSalutationControle());
+    this.controls.push(this.addFirstNameControle());
+    this.controls.push(this.addLastNameControle());
+    this.controls.push(this.addJobTitleControle());
+    this.controls.push(this.addCompanyControle());
+    this.controls.push(this.addMobileControle());
+    this.controls.push(this.addEmailControle());
+  }
 
+
+
+  private  addSalutationControle():JsonFormControls {
+    return {
+      id: 'salutation',
+      name : 'salutation',
+      label : 'Salutation:',
+      placeholder : 'Salutation',
+      type : this.formControlTypes.Select,
+      selectoptions : [
+        {key:'MR',value:'MR'},
+        {key:'MRS',value:'MRS'},
+        {key:'MS',value:'MS'},
+        {key:'MISS',value:'MISS'},
+        {key:'DR',value:'DR'},
+        {key:'PROF.',value:'PROF.'},
+        {key:'ENG.',value:'ENG.'},
+      ] as JsonFormControlSelectOptions[],
+      validators : { required: true } as JsonFormValidators
+    } as JsonFormControls;
+  }
+  private  addFirstNameControle():JsonFormControls {
+    return {
+      id: 'firstName',
+      name : 'firstName',
+      label : 'First name:',
+      placeholder : 'First name',
+      type : this.formControlTypes.Text,
+      validators : { required: true, minLength: 10, maxLength: 15 } as JsonFormValidators
+    } as JsonFormControls;
+  }
+  private  addLastNameControle():JsonFormControls {
+    return {
+      id: 'lastname',
+      name : 'lastname',
+      label : 'Last name:',
+      placeholder : 'Last name',
+      type : this.formControlTypes.Text,
+      validators : { required: true, minLength: 10, maxLength: 15 } as JsonFormValidators
+    } as JsonFormControls;
+  }
+  private  addJobTitleControle():JsonFormControls {
+    return {
+      id: 'jobtitle',
+      name : 'jobtitle',
+      label : 'Job Title:',
+      placeholder : 'JobTitle',
+      type : this.formControlTypes.Text,
+      validators : { required: true, minLength: 10, maxLength: 15 } as JsonFormValidators
+    } as JsonFormControls;
+  }
+  private  addCompanyControle():JsonFormControls {
+    return {
+      id: 'company',
+      name : 'company',
+      label : 'Company:',
+      placeholder : 'Company',
+      type : this.formControlTypes.Text,
+      validators : { required: true, minLength: 10, maxLength: 15 } as JsonFormValidators
+    } as JsonFormControls;
+  }
+  private  addEmailControle():JsonFormControls {
+    return {
+      id: 'email',
+      name : 'email',
+      label : 'Email:',
+      placeholder : 'Email',
+      type : this.formControlTypes.Email,
+      validators : { required: true,email:true } as JsonFormValidators
+    } as JsonFormControls;
+  }
+  private  addMobileControle():JsonFormControls {
+    return {
+      id: 'mobile',
+      name : 'mobile',
+      label : 'Mobile:',
+      placeholder : 'Mobile',
+      type : this.formControlTypes.Tel,
+      validators : { required: true, minLength: 10, maxLength: 15} as JsonFormValidators
+    } as JsonFormControls;
+  }
 }
