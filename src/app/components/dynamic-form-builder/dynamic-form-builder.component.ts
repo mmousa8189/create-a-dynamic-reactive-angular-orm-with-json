@@ -100,6 +100,7 @@ export class DynamicFormBuilderComponent implements OnInit {
     //this.selectoptions
   }
   addControle() {
+    this.controlModel.label = this.controlModel.label+':';
     if(!this.checkIfControleIsExist()){
       this.prepareControlObject();
       this.controls.push(this.controlModel);
@@ -131,7 +132,7 @@ export class DynamicFormBuilderComponent implements OnInit {
     if(this.controlModel.type == this.formControlTypes.Select){
       this.controlModel.selectoptions = this.selectOptionsTemp;
     }
-    this.controlModel.label = this.controlModel.label+':';
+
     this.setValidators();
   }
   private setValidators():void{
@@ -193,9 +194,9 @@ export class DynamicFormBuilderComponent implements OnInit {
   }
   private  addFirstNameControle():JsonFormControls {
     return {
-      id: 'firstName',
-      name : 'firstName',
-      label : 'First name:',
+      id: 'firstname',
+      name : 'firstname',
+      label : 'First Name:',
       placeholder : 'First name',
       type : this.formControlTypes.Text,
       validators : { required: true, minLength: 10, maxLength: 15 } as JsonFormValidators
