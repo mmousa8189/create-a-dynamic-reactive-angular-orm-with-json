@@ -15,7 +15,7 @@
     <!-- form builder-->
     <div class="row justify-content-center">
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
           <form #dynamicForm="ngForm">
             <div class="row">
               <div class="col-sm-4">
@@ -26,7 +26,8 @@
                   id="controleIdName"
                   name="controleIdName"
                   placeholder="Enter Input Id"
-                  [(ngModel)]="controlModel.id && controlModel.name"
+                  [(ngModel)]="controlModel.id"
+                  (change)="controlModel.name = controlModel.id"
                 />
               </div>
               <div class="col-sm-4">
@@ -52,21 +53,23 @@
                 />
               </div>
             </div>
+            <br/>
             <div class="row">
               <div class="col-sm-4">
                 <label for="controletype">Input type</label>
-                <select class="form-control" (change)="onSelectType($event)">
-                  <option value="" disabled selected>Input Type</option>
+                <select class="form-control" id="controletype"
+                name="controletype" (change)="onSelectType($event)">
+                  <option value="0" disabled selected>Input Type</option>
                   <option
                     *ngFor="let type of controleTypes"
                     [value]="type"
-                    id="controleType"
-                    name="controleType" >
+                    id="controleTypeOptions"
+                    name="controleTypeOptions" >
                     {{ jsonFormControlTypesMapping[type] }}
                   </option>
                 </select>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-8">
                 <!--validators-->
                 <div class="card">
                   <div class="card-header">Validators</div>
@@ -77,7 +80,9 @@
                       class="form-check-input"
                       type="checkbox"
                       id="required"
+                      name="required"
                       [value]="isHaveRequired"
+                      [checked]="isHaveRequired"
                       (change)="onCheckboxChange($event)" />
                     <label class="form-check-label" for="required">Required</label>
                   </div>
@@ -149,13 +154,55 @@
 
                 <!--validators-->
               </div>
-              <div class="col-sm-8">
+            </div>
+            <br/>
+            <div *ngIf="controlModel.type == 'select'" class="row">
+              <div class="card">
+                <div class="card-header">Select Options</div>
+                <div class="card-body">
+                  <div class="row">
+                  <div  class="col-sm-6">
+                    <label for="selectoptionkey">Option key</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="selectoptionkey"
+                      name="selectoptionkey"
+                      [(ngModel)]="selectoption.key"
+                      placeholder="Option key"
+                    />
+                  </div>
+                  <div  class="col-sm-6">
+                    <label for="selectoptionvalue">Option Value</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="selectoptionvalue"
+                      name="selectoptionvalue"
+                      [(ngModel)]="selectoption.value"
+                      placeholder="Option Value"
+                    />
+                  </div>
+                  <br/>
+
+                </div>
+                <br/>
+                <div class="row">
+                  <button type="button" class="btn btn-primary" (click)="addSelectOption()">Add Select Option</button>
+                </div>
+                </div>
+              </div>
+
+
+          </div>
+            <br/>
+            <div class="row">
                 <!--validators-->
                 <div class="card">
                   <div class="card-header">Validators Inputs</div>
                   <div class="card-body">
-
-                    <div *ngIf="isHaveMin" class="col-sm-4">
+                    <div class="row">
+                    <div *ngIf="isHaveMin" class="col-sm-6">
                       <label for="minvalidationvalue">Min Validation Value</label>
                       <input
                         type="text"
@@ -166,7 +213,7 @@
                         placeholder="Min Validation Value"
                       />
                     </div>
-                    <div *ngIf="isHaveMax" class="col-sm-4">
+                    <div *ngIf="isHaveMax" class="col-sm-6">
                       <label for="maxvalidationvalue">Max Validation Value</label>
                       <input
                         type="text"
@@ -178,10 +225,10 @@
                       />
                     </div>
 
-                    <div *ngIf="isHaveMinLength" class="col-sm-4">
+                    <div *ngIf="isHaveMinLength" class="col-sm-6">
                       <label for="minLengthvalidationvalue">Min Length Validation Value</label>
                       <input
-                        type="text"
+                        type="number"
                         class="form-control form-control-sm"
                         id="minLengthvalidationvalue"
                         name="minLengthvalidationvalue"
@@ -189,10 +236,10 @@
                         placeholder="Min Length Validation Value"
                       />
                     </div>
-                    <div *ngIf="isHaveMaxLength" class="col-sm-4">
+                    <div *ngIf="isHaveMaxLength" class="col-sm-6">
                       <label for="maxLengthvalidationvalue">Max Length Validation Value</label>
                       <input
-                        type="text"
+                        type="number"
                         class="form-control form-control-sm"
                         id="maxLengthvalidationvalue"
                         name="maxLengthvalidationvalue"
@@ -202,12 +249,13 @@
                     </div>
 
                   </div>
+                  </div>
                 </div>
 
                 <!--validators-->
-              </div>
-            </div>
 
+            </div>
+            <br/>
             <button type="button" class="btn btn-primary" (click)="addControle()">Add Controle</button>
           </form>
         </div>

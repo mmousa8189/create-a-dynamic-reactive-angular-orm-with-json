@@ -1,5 +1,6 @@
 export enum JsonFormControlTypes {
 Text="text",
+TextArea="textarea",
 Password="password",
 Email="email",
 Number="number",
@@ -12,6 +13,7 @@ Checkbox="checkbox",
 
 export const JsonFormControlTypesMapping: Record<JsonFormControlTypes, string> = {
   [JsonFormControlTypes.Text]: "text",
+  [JsonFormControlTypes.TextArea]: "textarea",
   [JsonFormControlTypes.Password]: "password",
   [JsonFormControlTypes.Email]: "email",
   [JsonFormControlTypes.Number]: "number",
