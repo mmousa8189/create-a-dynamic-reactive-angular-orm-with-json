@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -11,17 +11,23 @@ import { JsonFormControlOptions } from 'src/app/models/json-form-control-options
 import { JsonFormControlSelectOptions } from 'src/app/models/json-form-control-select-options';
 import { JsonFormValidators } from 'src/app/models/json-form-validators';
 import { element } from 'protractor';
+import { DynmicFormProxyService } from 'src/app/services/dynmic-form-proxy.service';
+import { RequestModel } from 'src/app/models/request-model';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-dynamic-form-builder',
   templateUrl: './dynamic-form-builder.component.html',
   styleUrls: ['./dynamic-form-builder.component.css'],
 })
-export class DynamicFormBuilderComponent implements OnInit {
+export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
+  private ngUnsubscribe = new Subject();
   formControlTypes = JsonFormControlTypes;
   jsonFormControlTypesMapping = JsonFormControlTypesMapping;
   jsonFormData: JsonFormData | undefined;
   controls: JsonFormControls[] = [];
+  controlsJson: any;
   controlModel: JsonFormControls = {} as JsonFormControls;
   options?: JsonFormControlOptions;
   selectoptions: JsonFormControlSelectOptions[] = [];
@@ -39,7 +45,7 @@ export class DynamicFormBuilderComponent implements OnInit {
   isHaveMaxLength: boolean = false;
   isHavePattern: boolean = false;
   //#endregion validators checkbox values
-  constructor() {
+  constructor(private _dynmicFormProxyService: DynmicFormProxyService) {
     this.selectOptionsTemp = Array<JsonFormControlSelectOptions>();
     this.selectoption = {} as JsonFormControlSelectOptions;
     this.validators = {} as JsonFormValidators;
@@ -47,6 +53,10 @@ export class DynamicFormBuilderComponent implements OnInit {
 
   ngOnInit(): void {
     this.addInitInputsToForm();
+  }
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.unsubscribe();
   }
 
   onCheckboxChange(event: Event) {
@@ -109,6 +119,30 @@ export class DynamicFormBuilderComponent implements OnInit {
       alert('Already Exist!!!!');
       this.clearUiInputs();
     }
+  }
+  saveForm(){
+    this.saveFormData();
+  }
+  private saveFormData() {
+    this.controlsJson = {controls:this.controls};
+    let requestBody: RequestModel = {
+    eventName:'testPOC2',
+    formJsonStructure: JSON.stringify(this.controlsJson)
+   };
+    this._dynmicFormProxyService.Save(requestBody)
+    .pipe(takeUntil(this.ngUnsubscribe))
+  .subscribe(
+    (response) => {
+    console.log('response received')
+    console.log(response);
+  },
+  (error) => {                              //Error callback
+    console.error('Request failed with error')
+    alert(error);
+  },
+  () => {                                   //Complete callback
+    console.log('Request completed')
+  });
   }
 
   private clearUiInputs():void {

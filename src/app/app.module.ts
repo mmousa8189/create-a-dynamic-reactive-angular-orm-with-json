@@ -9,6 +9,9 @@ import { JsonFormComponent } from './components/json-form/json-form.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { DynamicFormBuilderComponent } from './components/dynamic-form-builder/dynamic-form-builder.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpProxyService } from './services/http-proxy.service';
+import { DynmicFormProxyService } from './services/dynmic-form-proxy.service';
+import { AppConfigService } from './services/app-config.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [AppConfigService,HttpProxyService,DynmicFormProxyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
