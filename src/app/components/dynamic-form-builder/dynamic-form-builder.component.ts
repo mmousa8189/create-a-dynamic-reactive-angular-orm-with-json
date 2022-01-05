@@ -21,7 +21,7 @@ import { Subject } from 'rxjs';
   templateUrl: './dynamic-form-builder.component.html',
   styleUrls: ['./dynamic-form-builder.component.css'],
 })
-export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
+export class DynamicFormBuilderComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   formControlTypes = JsonFormControlTypes;
   jsonFormControlTypesMapping = JsonFormControlTypesMapping;
@@ -60,58 +60,68 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
   }
 
   onCheckboxChange(event: Event) {
-    if((event.target as HTMLInputElement).id == 'required'){
-      this.isHaveRequired =(event.target as HTMLInputElement).checked ;
+    if ((event.target as HTMLInputElement).id == 'required'){
+      this.isHaveRequired = (event.target as HTMLInputElement).checked ;
     }
-    if((event.target as HTMLInputElement).id == 'min'){
-      this.isHaveMin =(event.target as HTMLInputElement).checked ;
+    if ((event.target as HTMLInputElement).id == 'min'){
+      this.isHaveMin = (event.target as HTMLInputElement).checked ;
     }
-    if((event.target as HTMLInputElement).id == 'max'){
-      this.isHaveMax =(event.target as HTMLInputElement).checked ;
+    if ((event.target as HTMLInputElement).id == 'max'){
+      this.isHaveMax = (event.target as HTMLInputElement).checked ;
     }
-    if((event.target as HTMLInputElement).id == 'minLength'){
-      this.isHaveMinLength =(event.target as HTMLInputElement).checked ;
+    if ((event.target as HTMLInputElement).id == 'minLength'){
+      this.isHaveMinLength = (event.target as HTMLInputElement).checked ;
     }
-    if((event.target as HTMLInputElement).id == 'maxLength'){
-      this.isHaveMaxLength =(event.target as HTMLInputElement).checked ;
+    if ((event.target as HTMLInputElement).id == 'maxLength'){
+      this.isHaveMaxLength = (event.target as HTMLInputElement).checked ;
     }
-    if((event.target as HTMLInputElement).id == 'email'){
-      this.isHaveEmail =(event.target as HTMLInputElement).checked ;
+    if ((event.target as HTMLInputElement).id == 'email'){
+      this.isHaveEmail = (event.target as HTMLInputElement).checked ;
+    }
+    if ((event.target as HTMLInputElement).id == 'pattern'){
+      this.isHavePattern = (event.target as HTMLInputElement).checked ;
     }
   }
   onSelectType(event: Event) {
     this.controlModel.type = (event.target as HTMLInputElement).value;
-    if(this.controlModel.type != this.formControlTypes.Text){
+    if (this.controlModel.type != this.formControlTypes.Text){
       this.isHaveMinLength = false;
-      this.isHaveMaxLength =false;
+      this.isHaveMaxLength = false;
+      this.isHavePattern = false;
     }
-    if(this.controlModel.type != this.formControlTypes.TextArea){
+    if (this.controlModel.type != this.formControlTypes.Tel){
       this.isHaveMinLength = false;
-      this.isHaveMaxLength =false;
+      this.isHaveMaxLength = false;
+      this.isHavePattern = false;
     }
-    if(this.controlModel.type != this.formControlTypes.Number){
+    if (this.controlModel.type != this.formControlTypes.TextArea){
+      this.isHaveMinLength = false;
+      this.isHaveMaxLength = false;
+
+    }
+    if (this.controlModel.type != this.formControlTypes.Number){
       this.isHaveMin = false;
-      this.isHaveMax =false;
+      this.isHaveMax = false;
     }
-    if(this.controlModel.type != this.formControlTypes.Email){
+    if (this.controlModel.type != this.formControlTypes.Email){
       this.isHaveEmail = false;
     }
-    if(this.controlModel.type != this.formControlTypes.Select){
+    if (this.controlModel.type != this.formControlTypes.Select){
       this.selectOptionsTemp = [];
     }
   }
 
   addSelectOption(){
-    if(Object.keys(this.selectoption).length != 0){
+    if (Object.keys(this.selectoption).length != 0){
       this.selectOptionsTemp.push(this.selectoption);
-      this.selectoption={} as JsonFormControlSelectOptions;
+      this.selectoption = {} as JsonFormControlSelectOptions;
     }
 
     //this.selectoptions
   }
   addControle() {
-    this.controlModel.label = this.controlModel.label+':';
-    if(!this.checkIfControleIsExist()){
+    this.controlModel.label = this.controlModel.label + ':';
+    if (!this.checkIfControleIsExist()){
       this.prepareControlObject();
       this.controls.push(this.controlModel);
       this.clearUiInputs();
@@ -124,9 +134,9 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
     this.saveFormData();
   }
   private saveFormData() {
-    this.controlsJson = {controls:this.controls};
+    this.controlsJson = {controls: this.controls};
     let requestBody: RequestModel = {
-    eventName:'testPOC2',
+    eventName: 'testPOC2',
     formJsonStructure: JSON.stringify(this.controlsJson)
    };
     this._dynmicFormProxyService.Save(requestBody)
@@ -145,7 +155,7 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
   });
   }
 
-  private clearUiInputs():void {
+  private clearUiInputs(): void {
     this.controlModel = {} as JsonFormControls;
     this.isHaveRequired = false;
     var select = document.getElementById("controletype") as HTMLSelectElement;
@@ -162,31 +172,31 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
       );
   }
 
-  private prepareControlObject():void{
-    if(this.controlModel.type == this.formControlTypes.Select){
+  private prepareControlObject(): void{
+    if (this.controlModel.type == this.formControlTypes.Select){
       this.controlModel.selectoptions = this.selectOptionsTemp;
     }
 
     this.setValidators();
   }
-  private setValidators():void{
+  private setValidators(): void{
     let validatorsPartial = this.validators as Partial<JsonFormValidators>;
-    if(this.isHaveRequired){
+    if (this.isHaveRequired){
       validatorsPartial.required = this.isHaveRequired;
     }
-    if(!this.isHaveMin && validatorsPartial.min){
+    if (!this.isHaveMin && validatorsPartial.min){
       delete validatorsPartial.min;
     }
-    if(!this.isHaveMin && validatorsPartial.max){
+    if (!this.isHaveMin && validatorsPartial.max){
       delete validatorsPartial.max;
     }
-    if(!this.isHaveMin && validatorsPartial.minLength){
+    if (!this.isHaveMin && validatorsPartial.minLength){
       delete validatorsPartial.minLength;
     }
-    if(!this.isHaveMin && validatorsPartial.maxLength){
+    if (!this.isHaveMin && validatorsPartial.maxLength){
       delete validatorsPartial.maxLength;
     }
-    if(!this.isHaveEmail && validatorsPartial.email){
+    if (!this.isHaveEmail && validatorsPartial.email){
       delete validatorsPartial.email;
     }
 
@@ -195,7 +205,7 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
 
   }
 
-  private addInitInputsToForm():void{
+  private addInitInputsToForm(): void{
     this.controls.push(this.addSalutationControle());
     this.controls.push(this.addFirstNameControle());
     this.controls.push(this.addLastNameControle());
@@ -207,7 +217,7 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
 
 
 
-  private  addSalutationControle():JsonFormControls {
+  private  addSalutationControle(): JsonFormControls {
     return {
       id: 'salutation',
       name : 'salutation',
@@ -215,18 +225,18 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
       placeholder : 'Salutation',
       type : this.formControlTypes.Select,
       selectoptions : [
-        {key:'MR',value:'MR'},
-        {key:'MRS',value:'MRS'},
-        {key:'MS',value:'MS'},
-        {key:'MISS',value:'MISS'},
-        {key:'DR',value:'DR'},
-        {key:'PROF.',value:'PROF.'},
-        {key:'ENG.',value:'ENG.'},
+        {key: 'MR', value: 'MR'},
+        {key: 'MRS', value: 'MRS'},
+        {key: 'MS', value: 'MS'},
+        {key: 'MISS', value: 'MISS'},
+        {key: 'DR', value: 'DR'},
+        {key: 'PROF.', value: 'PROF.'},
+        {key: 'ENG.', value: 'ENG.'},
       ] as JsonFormControlSelectOptions[],
       validators : { required: true } as JsonFormValidators
     } as JsonFormControls;
   }
-  private  addFirstNameControle():JsonFormControls {
+  private  addFirstNameControle(): JsonFormControls {
     return {
       id: 'firstname',
       name : 'firstname',
@@ -236,7 +246,7 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
       validators : { required: true, minLength: 10, maxLength: 15 } as JsonFormValidators
     } as JsonFormControls;
   }
-  private  addLastNameControle():JsonFormControls {
+  private  addLastNameControle(): JsonFormControls {
     return {
       id: 'lastname',
       name : 'lastname',
@@ -246,7 +256,7 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
       validators : { required: true, minLength: 10, maxLength: 15 } as JsonFormValidators
     } as JsonFormControls;
   }
-  private  addJobTitleControle():JsonFormControls {
+  private  addJobTitleControle(): JsonFormControls {
     return {
       id: 'jobtitle',
       name : 'jobtitle',
@@ -256,7 +266,7 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
       validators : { required: true, minLength: 10, maxLength: 15 } as JsonFormValidators
     } as JsonFormControls;
   }
-  private  addCompanyControle():JsonFormControls {
+  private  addCompanyControle(): JsonFormControls {
     return {
       id: 'company',
       name : 'company',
@@ -266,24 +276,24 @@ export class DynamicFormBuilderComponent implements OnInit,OnDestroy {
       validators : { required: true, minLength: 10, maxLength: 15 } as JsonFormValidators
     } as JsonFormControls;
   }
-  private  addEmailControle():JsonFormControls {
+  private  addEmailControle(): JsonFormControls {
     return {
       id: 'email',
       name : 'email',
       label : 'Email:',
       placeholder : 'Email',
       type : this.formControlTypes.Email,
-      validators : { required: true,email:true } as JsonFormValidators
+      validators : { required: true, email: true } as JsonFormValidators
     } as JsonFormControls;
   }
-  private  addMobileControle():JsonFormControls {
+  private  addMobileControle(): JsonFormControls {
     return {
       id: 'mobile',
       name : 'mobile',
       label : 'Mobile:',
       placeholder : 'Mobile',
       type : this.formControlTypes.Tel,
-      validators : { required: true, minLength: 10, maxLength: 15} as JsonFormValidators
+      validators : { required: true, minLength: 10, maxLength: 15, pattern: '^[0-9]*$'} as JsonFormValidators
     } as JsonFormControls;
   }
 }

@@ -149,6 +149,18 @@
                       <label class="form-check-label" for="maxLength">Max Length</label>
                       </div>
                     <!--maxLength-->
+                        <!--pattern-->
+                        <div *ngIf="controlModel.type == 'text' || controlModel.type == 'tel'"
+                        class="form-check form-check-inline" >
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="pattern"
+                          [value]="isHavePattern"
+                          (change)="onCheckboxChange($event)" />
+                        <label class="form-check-label" for="pattern">Regex Pattern</label>
+                        </div>
+                      <!--pattern-->
                   </div>
                 </div>
 
@@ -247,7 +259,17 @@
                         placeholder="Max Length Validation Value"
                       />
                     </div>
-
+                    <div *ngIf="isHavePattern" class="col-sm-6">
+                      <label for="patternvalidationvalue">Pattern Validation Value</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        id="patternvalidationvalue"
+                        name="patternvalidationvalue"
+                        [(ngModel)]="validators.pattern"
+                        placeholder="Pattern Validation Value"
+                      />
+                    </div>
                   </div>
                   </div>
                 </div>

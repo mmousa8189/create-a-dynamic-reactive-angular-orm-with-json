@@ -38,25 +38,28 @@
           'url'
         ].includes(control.type)
       "
-      class="alert"
+      class="error-txt-msg mb-2" style="color: red;"
     >
       <div *ngIf="dynamicForm.controls[control.name].hasError('required')">
-        is required.
+        Is required.
       </div>
       <div *ngIf="dynamicForm.controls[control.name].hasError('minlength')">
-        must be at least {{ control.validators.minLength }} characters long.
+        Must be at least {{ control.validators.minLength }} characters long.
       </div>
       <div *ngIf="dynamicForm.controls[control.name].hasError('maxlength')">
-        mustn't be greeter than {{ control.validators.maxLength }} characters.
+        Mustn't be greeter than {{ control.validators.maxLength }} characters.
       </div>
       <div *ngIf="dynamicForm.controls[control.name].hasError('min')">
-        must be at least {{ control.validators.minLength }} digit long.
+        Must be at least {{ control.validators.minLength }} digit long.
       </div>
       <div *ngIf="dynamicForm.controls[control.name].hasError('max')">
-        mustn't be greeter than {{ control.validators.maxLength }} digit.
+        Mustn't be greeter than {{ control.validators.maxLength }} digit.
       </div>
       <div *ngIf="dynamicForm.controls[control.name].hasError('email')">
-        enter valid email.
+        Enter valid email.
+      </div>
+      <div *ngIf="dynamicForm.controls[control.name].hasError('pattern')">
+        Incorrect format.
       </div>
     </div>
     <textarea
@@ -74,16 +77,16 @@
       (dynamicForm.controls[control.name].dirty ||
         dynamicForm.controls[control.name].touched)
     "
-    class="alert"
+    class="error-txt-msg mb-2" style="color: red;"
   >
     <div *ngIf="dynamicForm.controls[control.name].hasError('required')">
-      is required.
+      Is required.
     </div>
     <div *ngIf="dynamicForm.controls[control.name].hasError('minlength')">
-      must be at least {{ control.validators.minLength }} characters long.
+      Must be at least {{ control.validators.minLength }} characters long.
     </div>
     <div *ngIf="dynamicForm.controls[control.name].hasError('maxlength')">
-      mustn't be greeter than {{ control.validators.maxLength }} characters.
+      Mustn't be greeter than {{ control.validators.maxLength }} characters.
     </div>
   </div>
     <select
@@ -104,10 +107,10 @@
         (dynamicForm.controls[control.name].dirty ||
           dynamicForm.controls[control.name].touched)
       "
-      class="alert"
+      class="error-txt-msg mb-2" style="color: red;"
     >
-      <div *ngIf="dynamicForm.controls[control.name].hasError('required')">
-        is required.
+      <div  *ngIf="dynamicForm.controls[control.name].hasError('required')">
+        Is required.
       </div>
     </div>
     <div class="col-sm-5" *ngIf="['checkbox'].includes(control.type)">
