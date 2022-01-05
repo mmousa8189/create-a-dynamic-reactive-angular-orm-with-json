@@ -11,17 +11,17 @@ import { RequestModel } from '../models/request-model';
 })
 export class DynmicFormProxyService {
 
-  private apiURL: string = 'https://localhost:44367/api/';
-  constructor(private _httpProxyService: HttpProxyService ) { }
+  private apiURL = 'https://localhost:44367/api/';
+  constructor(private httpProxyService: HttpProxyService ) { }
 
   public GetFormByEvent(eventName: string): Observable<ResponseModel> {
     const url = this.apiURL + `DynamicRegisterForm/GetByEventName?eventName=${eventName}`;
-    return this._httpProxyService.get<ResponseModel>(url);
+    return this.httpProxyService.get<ResponseModel>(url);
   }
 
-  public Save(requestModel: RequestModel){
+  public Save(requestModel: RequestModel): Observable<any>{
     const url = this.apiURL + 'DynamicRegisterForm/AddOrUpdateNewEvent';
-    return this._httpProxyService.put<any>(url,requestModel);
+    return this.httpProxyService.put<any>(url, requestModel);
   }
 
 }

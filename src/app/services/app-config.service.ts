@@ -14,12 +14,12 @@ export class AppConfigService {
     this.http = new HttpClient(handler);
   }
 
-  public load() {
+  public load(): Promise<any> {
     const jsonFileUrl = `/assets/config/config.json`;
 
     return new Promise<any>((resolve, reject) => {
       this.http.get(jsonFileUrl).toPromise().then((response: any) => {
-          AppConfigService.settings = <IAppConfig>response;
+          AppConfigService.settings = (response as IAppConfig);
 
           resolve(response);
         })

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JsonFormComponent } from './components/json-form/json-form.component';
@@ -29,7 +29,7 @@ import { AppConfigService } from './services/app-config.service';
     FormsModule,
     BrowserAnimationsModule
   ],
-  providers: [AppConfigService,HttpProxyService,DynmicFormProxyService],
+  providers: [AppConfigService, HttpProxyService, DynmicFormProxyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

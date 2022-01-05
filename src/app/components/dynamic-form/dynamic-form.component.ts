@@ -11,13 +11,13 @@ import { DynmicFormProxyService } from 'src/app/services/dynmic-form-proxy.servi
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.css']
 })
-export class DynamicFormComponent implements OnInit,OnDestroy {
+export class DynamicFormComponent implements OnInit, OnDestroy {
   public response: ResponseModel |undefined;
   public formData: JsonFormData | undefined;
   private ngUnsubscribe = new Subject();
-  constructor(private _dynmicFormProxyService: DynmicFormProxyService) {}
+  constructor(private dynmicFormProxyService: DynmicFormProxyService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.GetFormByEvent();
 }
 ngOnDestroy(): void {
@@ -25,22 +25,22 @@ ngOnDestroy(): void {
   this.ngUnsubscribe.unsubscribe();
 }
 
-private GetFormByEvent(){
-  this._dynmicFormProxyService.GetFormByEvent("testPOC2")
+private GetFormByEvent(): void{
+  this.dynmicFormProxyService.GetFormByEvent('testPOC2')
   .pipe(takeUntil(this.ngUnsubscribe))
   .subscribe(
     (response) => {
-    console.log('response received')
+    console.log('response received');
     console.log(response);
     this.response = response;
     this.formData = JSON.parse(this.response.formJsonStructure);
   },
-  (error) => {                              //Error callback
-    console.error('Request failed with error')
+  (error) => {                              // Error callback
+    console.error('Request failed with error');
     alert(error);
   },
-  () => {                                   //Complete callback
-    console.log('Request completed')
+  () => {                                   // Complete callback
+    console.log('Request completed');
   });
 }
 }

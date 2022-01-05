@@ -23,25 +23,26 @@ import { JsonFormData } from 'src/app/models/json-form-data';
   templateUrl: './json-form.component.html',
   styleUrls: ['./json-form.component.css']
 })
-export class JsonFormComponent implements OnInit,OnChanges  {
-  @Input() jsonFormData : JsonFormData | undefined;
+export class JsonFormComponent implements OnInit, OnChanges  {
+  @Input() jsonFormData: JsonFormData | undefined;
   public dynamicForm: FormGroup = this.fb.group({});
-  public formRowValue:string|undefined;
-  constructor(private fb: FormBuilder,private http: HttpClient) { }
+  public formRowValue: string|undefined;
+  constructor(private fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(): void {
 
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (!changes.jsonFormData.firstChange) {
       console.log(this.jsonFormData);
-      if(this.jsonFormData)
+      if (this.jsonFormData) {
         this.createForm(this.jsonFormData.controls);
+      }
     }
   }
 
-  createForm(controls: JsonFormControls[]) {
+  createForm(controls: JsonFormControls[]): void {
     for (const control of controls) {
       const validatorsToAdd = [];
 
@@ -94,8 +95,8 @@ export class JsonFormComponent implements OnInit,OnChanges  {
     }
   }
 
-  onSubmit() {
-    alert('Form valid: '+ this.dynamicForm.valid)
+  onSubmit(): void {
+    alert('Form valid: ' + this.dynamicForm.valid);
     this.formRowValue = JSON.stringify(this.dynamicForm.getRawValue());
     console.log('Form valid: ', this.dynamicForm.valid);
     console.log('Form values: ', this.dynamicForm.value);

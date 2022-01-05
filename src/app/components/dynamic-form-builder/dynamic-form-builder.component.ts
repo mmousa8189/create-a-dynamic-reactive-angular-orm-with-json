@@ -36,16 +36,16 @@ export class DynamicFormBuilderComponent implements OnInit, OnDestroy {
   public controleTypes = Object.values(JsonFormControlTypes);
   selectOptionsTemp;
   //#region validators checkbox values
-  isHaveMin: boolean = false;
-  isHaveMax: boolean = false;
-  isHaveRequired: boolean = false;
-  isHaveRequiredTrue: boolean = false;
-  isHaveEmail: boolean = false;
-  isHaveMinLength: boolean = false;
-  isHaveMaxLength: boolean = false;
-  isHavePattern: boolean = false;
+  isHaveMin = false;
+  isHaveMax = false;
+  isHaveRequired = false;
+  isHaveRequiredTrue = false;
+  isHaveEmail = false;
+  isHaveMinLength = false;
+  isHaveMaxLength = false;
+  isHavePattern = false;
   //#endregion validators checkbox values
-  constructor(private _dynmicFormProxyService: DynmicFormProxyService) {
+  constructor(private dynmicFormProxyService: DynmicFormProxyService) {
     this.selectOptionsTemp = Array<JsonFormControlSelectOptions>();
     this.selectoption = {} as JsonFormControlSelectOptions;
     this.validators = {} as JsonFormValidators;
@@ -59,67 +59,67 @@ export class DynamicFormBuilderComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.unsubscribe();
   }
 
-  onCheckboxChange(event: Event) {
-    if ((event.target as HTMLInputElement).id == 'required'){
+  onCheckboxChange(event: Event): void {
+    if ((event.target as HTMLInputElement).id === 'required'){
       this.isHaveRequired = (event.target as HTMLInputElement).checked ;
     }
-    if ((event.target as HTMLInputElement).id == 'min'){
+    if ((event.target as HTMLInputElement).id === 'min'){
       this.isHaveMin = (event.target as HTMLInputElement).checked ;
     }
-    if ((event.target as HTMLInputElement).id == 'max'){
+    if ((event.target as HTMLInputElement).id === 'max'){
       this.isHaveMax = (event.target as HTMLInputElement).checked ;
     }
-    if ((event.target as HTMLInputElement).id == 'minLength'){
+    if ((event.target as HTMLInputElement).id === 'minLength'){
       this.isHaveMinLength = (event.target as HTMLInputElement).checked ;
     }
-    if ((event.target as HTMLInputElement).id == 'maxLength'){
+    if ((event.target as HTMLInputElement).id === 'maxLength'){
       this.isHaveMaxLength = (event.target as HTMLInputElement).checked ;
     }
-    if ((event.target as HTMLInputElement).id == 'email'){
+    if ((event.target as HTMLInputElement).id === 'email'){
       this.isHaveEmail = (event.target as HTMLInputElement).checked ;
     }
-    if ((event.target as HTMLInputElement).id == 'pattern'){
+    if ((event.target as HTMLInputElement).id === 'pattern'){
       this.isHavePattern = (event.target as HTMLInputElement).checked ;
     }
   }
-  onSelectType(event: Event) {
+  onSelectType(event: Event): void {
     this.controlModel.type = (event.target as HTMLInputElement).value;
-    if (this.controlModel.type != this.formControlTypes.Text){
+    if (this.controlModel.type !== this.formControlTypes.Text){
       this.isHaveMinLength = false;
       this.isHaveMaxLength = false;
       this.isHavePattern = false;
     }
-    if (this.controlModel.type != this.formControlTypes.Tel){
+    if (this.controlModel.type !== this.formControlTypes.Tel){
       this.isHaveMinLength = false;
       this.isHaveMaxLength = false;
       this.isHavePattern = false;
     }
-    if (this.controlModel.type != this.formControlTypes.TextArea){
+    if (this.controlModel.type !== this.formControlTypes.TextArea){
       this.isHaveMinLength = false;
       this.isHaveMaxLength = false;
 
     }
-    if (this.controlModel.type != this.formControlTypes.Number){
+    if (this.controlModel.type !== this.formControlTypes.Number){
       this.isHaveMin = false;
       this.isHaveMax = false;
     }
-    if (this.controlModel.type != this.formControlTypes.Email){
+    if (this.controlModel.type !== this.formControlTypes.Email){
       this.isHaveEmail = false;
     }
-    if (this.controlModel.type != this.formControlTypes.Select){
+    if (this.controlModel.type !== this.formControlTypes.Select){
       this.selectOptionsTemp = [];
     }
   }
 
-  addSelectOption(){
-    if (Object.keys(this.selectoption).length != 0){
+  addSelectOption(): void{
+    if (Object.keys(this.selectoption).length !== 0){
       this.selectOptionsTemp.push(this.selectoption);
       this.selectoption = {} as JsonFormControlSelectOptions;
     }
 
-    //this.selectoptions
+    // this.selectoptions
   }
-  addControle() {
+  addControle(): void {
     this.controlModel.label = this.controlModel.label + ':';
     if (!this.checkIfControleIsExist()){
       this.prepareControlObject();
@@ -130,35 +130,35 @@ export class DynamicFormBuilderComponent implements OnInit, OnDestroy {
       this.clearUiInputs();
     }
   }
-  saveForm(){
+  saveForm(): void{
     this.saveFormData();
   }
-  private saveFormData() {
+  private saveFormData(): void {
     this.controlsJson = {controls: this.controls};
-    let requestBody: RequestModel = {
+    const requestBody: RequestModel = {
     eventName: 'testPOC2',
     formJsonStructure: JSON.stringify(this.controlsJson)
    };
-    this._dynmicFormProxyService.Save(requestBody)
+    this.dynmicFormProxyService.Save(requestBody)
     .pipe(takeUntil(this.ngUnsubscribe))
   .subscribe(
     (response) => {
-    console.log('response received')
+    console.log('response received');
     console.log(response);
   },
-  (error) => {                              //Error callback
-    console.error('Request failed with error')
+  (error) => {                              // Error callback
+    console.error('Request failed with error');
     alert(error);
   },
-  () => {                                   //Complete callback
-    console.log('Request completed')
+  () => {                                   // Complete callback
+    console.log('Request completed');
   });
   }
 
   private clearUiInputs(): void {
     this.controlModel = {} as JsonFormControls;
     this.isHaveRequired = false;
-    var select = document.getElementById("controletype") as HTMLSelectElement;
+    const select = document.getElementById('controletype') as HTMLSelectElement;
     select.selectedIndex = 0;
   }
 
@@ -173,14 +173,14 @@ export class DynamicFormBuilderComponent implements OnInit, OnDestroy {
   }
 
   private prepareControlObject(): void{
-    if (this.controlModel.type == this.formControlTypes.Select){
+    if (this.controlModel.type === this.formControlTypes.Select){
       this.controlModel.selectoptions = this.selectOptionsTemp;
     }
 
     this.setValidators();
   }
   private setValidators(): void{
-    let validatorsPartial = this.validators as Partial<JsonFormValidators>;
+    const validatorsPartial = this.validators as Partial<JsonFormValidators>;
     if (this.isHaveRequired){
       validatorsPartial.required = this.isHaveRequired;
     }

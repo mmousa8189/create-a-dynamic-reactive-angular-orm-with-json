@@ -7,31 +7,31 @@ import { Observable } from 'rxjs';
 })
 export class HttpProxyService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   public post<T>(url: string, body: any, options?: object): Observable<any> {
-    return this._http.post<T>(url, body, this._getOptions(options));
+    return this.http.post<T>(url, body, this.getOptions(options));
   }
 
   public get<T>(url: string, options?: object): Observable<any> {
-    return this._http.get<T>(url, this._getOptions(options));
+    return this.http.get<T>(url, this.getOptions(options));
   }
 
   public getWithoutHeaders<T>(url: string, options?: object): Observable<any> {
-    return this._http.get<T>(url, this._getOptionsWithoutHeaders(options));
+    return this.http.get<T>(url, this.getOptionsWithoutHeaders(options));
 
   }
 
   public delete<T>(url: string, options?: object): Observable<any> {
-    return this._http.delete<T>(url, this._getOptions(options));
+    return this.http.delete<T>(url, this.getOptions(options));
   }
 
   public put<T>(url: string, body: any, options?: object): Observable<any> {
-    return this._http.put<T>(url, body, this._getOptions(options));
+    return this.http.put<T>(url, body, this.getOptions(options));
   }
 
 
-  private _getOptions(options: any) {
+  private getOptions(options: any): any {
 
     if (options == null) {
       options = {};
@@ -41,12 +41,12 @@ export class HttpProxyService {
       options.headers = {};
     }
 
-    options.headers["Accept-Language"] = 'ar-eg';
+    options.headers['Accept-Language'] = 'ar-eg';
 
     return options;
   }
 
-  private _getOptionsWithoutHeaders(options: any) {
+  private getOptionsWithoutHeaders(options: any): any {
 
     if (options == null) {
       options = {};
@@ -56,7 +56,7 @@ export class HttpProxyService {
       options.headers = {};
     }
 
-    options.headers["Accept-Language"] = 'en';
+    options.headers['Accept-Language'] = 'en';
 
     return options;
   }
