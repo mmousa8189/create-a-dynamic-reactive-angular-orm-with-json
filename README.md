@@ -26,3 +26,14 @@ ng serve
 ```bash
 ng build
 ```
+### docker (build)
+
+```bash
+docker-compose build create-a-dynamic-reactive-angular-orm-with-json
+```
+
+### docker (run)
+
+```bash
+angular-dynamic-reactive-form
+```
