@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+    angular-dynamic-reactive-form:
+       container_name: create-a-dynamic-reactive-angular-orm-with-json
+       build: .
+       ports:
+           - "4200:80"
