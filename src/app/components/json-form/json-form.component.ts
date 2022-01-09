@@ -7,7 +7,8 @@ import {
   SimpleChanges,
   OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { JsonFormControlTypes } from 'src/app/models/json-form-control-types.enum';
 import { JsonFormControls } from 'src/app/models/json-form-controls';
 import { JsonFormData } from 'src/app/models/json-form-data';
 
@@ -27,7 +28,9 @@ export class JsonFormComponent implements OnInit, OnChanges  {
   @Input() jsonFormData: JsonFormData | undefined;
   public dynamicForm: FormGroup = this.fb.group({});
   public formRowValue: string|undefined;
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  formControlTypes = JsonFormControlTypes;
+   checkboxControleNameTempo = '';
+  constructor(private fb: FormBuilder, private http: HttpClient) {}
 
   ngOnInit(): void {
 
@@ -88,14 +91,39 @@ export class JsonFormComponent implements OnInit, OnChanges  {
         }
       }
 
-      this.dynamicForm.addControl(
-        control.name,
-        this.fb.control(control.value, validatorsToAdd)
-      );
+      if (control.type  !== this.formControlTypes.Checkbox) {
+      this.dynamicForm.addControl( control.name, this.fb.control(control.value, validatorsToAdd) );
+      }else {
+        this.checkboxControleNameTempo = control.name;
+        this.dynamicForm.addControl( control.name, this.fb.array([], validatorsToAdd));
+        control.checkboxoptions.forEach(() => this.checkBoxesFormArray.push(new FormControl()));
+      }
     }
   }
 
+
+   get checkBoxesFormArray(): FormArray {
+     const name = this.checkboxControleNameTempo as string;
+     return this.dynamicForm.controls[name] as FormArray;
+  }
+
+  mapCheckBoxValue(): void{
+      const checkboxoptions  = (this.jsonFormData?.controls
+        .find(e => e.name === this.checkboxControleNameTempo) as JsonFormControls).checkboxoptions;
+      const selectedKeys = this.dynamicForm.value[this.checkboxControleNameTempo]
+      .map((checked: any, i: any) => {
+        if(checked){
+        return checkboxoptions[i].key;
+        }else{
+          return null;
+        }
+      })
+      .filter((v: any) => v !== null);
+      this.dynamicForm.controls[this.checkboxControleNameTempo].patchValue(selectedKeys);
+
+  }
   onSubmit(): void {
+    this.mapCheckBoxValue();
     alert('Form valid: ' + this.dynamicForm.valid);
     this.formRowValue = JSON.stringify(this.dynamicForm.getRawValue());
     console.log('Form valid: ', this.dynamicForm.valid);

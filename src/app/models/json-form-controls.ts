@@ -1,3 +1,4 @@
+import { JsonFormControlCheckBoxOptions } from './json-form-control-check-box-options';
 import { JsonFormControlOptions } from './json-form-control-options';
 import { JsonFormControlSelectOptions } from './json-form-control-select-options';
 import { JsonFormValidators } from './json-form-validators';
@@ -12,5 +13,6 @@ export interface JsonFormControls {
   options?: JsonFormControlOptions;
   rows: string;
   selectoptions?: JsonFormControlSelectOptions[];
+  checkboxoptions: JsonFormControlCheckBoxOptions[];
   validators: JsonFormValidators;
 }

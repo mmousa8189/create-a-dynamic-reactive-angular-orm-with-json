@@ -11,7 +11,7 @@ import { RequestModel } from '../models/request-model';
 })
 export class DynmicFormProxyService {
 
-  private apiURL = 'https://localhost:44367/api/';
+  private apiURL = 'https://localhost:5001/api/';
   constructor(private httpProxyService: HttpProxyService ) { }
 
   public GetFormByEvent(eventName: string): Observable<ResponseModel> {
